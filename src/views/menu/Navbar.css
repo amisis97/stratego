@@ -1,0 +1,11 @@
+.menu {
+    font-size: 18px;
+    background-color: rgba(0, 0, 0, 0.7);
+    display:flex;
+    color:#fff;
+    height: 50px;
+    padding:10px;
+}
+.menu img {
+    height: 100%;
+}
