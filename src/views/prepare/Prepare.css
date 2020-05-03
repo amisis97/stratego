@@ -1,0 +1,67 @@
+.figures-set {
+    display:flex;
+    margin-bottom: 10px;
+}
+.box {
+    max-width: 100%;
+}
+.figures-set .figure-grid {
+    width: 50px;
+    height: 50px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    border:1px solid #fff;
+    background-color: rgba(0,0,0,0.9);
+    position: relative;
+    cursor: pointer;
+}
+.figures-set .figure-grid .count {
+    position: absolute;
+    bottom: 0;
+    right: 5px;
+    font-size: 10px;
+}
+.board {
+    display:grid;
+    display: -ms-grid;
+    width: 100%;
+    max-width: 400px;
+    margin:auto;
+    height: 400px;
+    background-image: url('../../assets/images/map.png');
+}
+.board .board-cell {
+    height: 100%;
+    width: 100%;
+    border: 1px solid #fff;
+    cursor: pointer;
+}
+.board .board-cell.unavailable {
+    cursor: not-allowed;
+    background-color: rgba(255,255,255,0.7);
+}
+.prepare {
+    position: relative;
+}
+.prepare button.ready {
+    min-width: 150px;
+    margin-top: 4vh;
+    min-height: 50px;
+    font-size: 20px;
+    border: 1px solid #fff;
+    background-color: transparent;
+    color:#fff;
+    cursor: pointer;
+    transition: all .3s ease-in-out;
+    position: absolute;
+    right: 20px;
+    top: 0px;
+    text-transform: uppercase;
+}
+.prepare button.ready:hover {
+    color:#000;
+    background-color: #fff;
+}

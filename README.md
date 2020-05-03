@@ -66,3 +66,15 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+Tóth Mihály József
+MFK4OT
+STRATEGO – KLIENSOLDALI WEBPROGRAMOZÁS
+2020.05.03
+Ezt a megoldást Tóth Mihály József (MFK4OT) küldte be és készítette a KLIENSOLDALI WEBPROGRAMOZÁS kurzus STRATEGO feladatához.
+Kijelentem, hogy ez a megoldás a saját munkám.
+Nem másoltam vagy használtam harmadik féltől származó megoldásokat.
+Nem továbbítottam megoldást hallgatótársaimnak, és nem is tettem közzé.
+Az Eötvös Loránd Tudományegyetem Hallgatói Követelményrendszere (ELTE szervezeti és működési szabályzata, II. Kötet, 74/C. §) kimondja, 
+hogy mindaddig, amíg egy hallgató egy másik hallgató munkáját - vagy legalábbis annak jelentős részét - saját munkájaként mutatja be, 
+az fegyelmi vétségnek számít. A fegyelmi vétség legsúlyosabb következménye a hallgató elbocsátása az egyetemről.

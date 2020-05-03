@@ -41,7 +41,7 @@ code {
 }
 
 .content-wrapper {
-  height: calc(100% - 130px);
+  height: calc(100% - 50px);
   padding:30px 0px;
 }
 
@@ -55,4 +55,8 @@ a:focus {
 
 h1 {
   font-size: 30px;
+}
+.scroll {
+  overflow-y: auto;
+  max-height: 100%;
 }

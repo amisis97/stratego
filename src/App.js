@@ -5,9 +5,10 @@ import { Layout } from './views/layout/Layout';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Leiras } from './views/static/Leiras';
 import { Wait } from './views/wait/Wait';
+import { Prepare } from './views/prepare/Prepare';
 
 function App() {
-  const [state, setState] = useState('MAIN_PAGE');
+  const [state, setState] = useState('PREPARE_GAME'); // teszt miatt
 
   console.log(state);
 
@@ -20,6 +21,8 @@ function App() {
             <Home state={state} setState={setState}/>}
             {state === 'WAITING_FOR_SECOND_PLAYER' &&
             <Wait state={state} setState={setState}/>}
+            {state === 'PREPARE_GAME' &&
+            <Prepare state={state} setState={setState}/>}
           </Route>
           <Route path="/leiras">
             <Leiras />

@@ -1,9 +1,18 @@
 .room-number {
     border: 1px solid #fff;
-    padding: 2px 20px;
+    padding: 8px 20px;
     margin-left: 10px;
 }
-.wait-load {
+.loader.ui.wait-load {
     display:inline-block;
     margin-left: 20px;
+}
+.loader.ui.wait-load:after {
+    border-color: #fff transparent transparent;
+}
+.wait-text {
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    height: 60px;
 }
