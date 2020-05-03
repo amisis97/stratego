@@ -4,9 +4,13 @@ import { Navbar } from "../menu/Navbar";
 
 export function Layout({ children }) {
   return (
-    <div className="ui container">
+    <div className="ui">
       <Navbar />
-      {children}
+      <div className="content-wrapper">
+        <div className="container">
+          {children}
+        </div>
+      </div>
     </div>
   )
 }

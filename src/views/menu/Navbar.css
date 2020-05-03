@@ -9,3 +9,11 @@
 .menu img {
     height: 100%;
 }
+.menu > a {
+    display:flex;
+    align-items: center;
+}
+.menu > a.desc {
+    margin-left: auto;
+    margin-right: 30px;
+}

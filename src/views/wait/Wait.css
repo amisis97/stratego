@@ -1,0 +1,9 @@
+.room-number {
+    border: 1px solid #fff;
+    padding: 2px 20px;
+    margin-left: 10px;
+}
+.wait-load {
+    display:inline-block;
+    margin-left: 20px;
+}

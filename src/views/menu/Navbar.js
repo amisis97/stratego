@@ -7,7 +7,7 @@ export function Navbar() {
     return (
         <div className="menu">
             <NavLink exact to="/"><img alt="logo" src={logo} /></NavLink>
-            <NavLink to="/leiras">Leírás</NavLink>
+            <NavLink className="desc" to="/leiras">Leírás</NavLink>
         </div>
     );
 }

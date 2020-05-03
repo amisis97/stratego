@@ -20,3 +20,39 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.container {
+  margin: auto;
+  width: 100%;
+  max-width: 1000px;
+  height: 100%;
+}
+
+.box {
+  padding: 30px;
+  background-color: rgba(0,0,0,0.7);
+  border:none;
+  color:#fff;
+}
+
+#root > .ui {
+  height: inherit;
+  overflow: hidden;
+}
+
+.content-wrapper {
+  height: calc(100% - 130px);
+  padding:30px 0px;
+}
+
+a,
+a:active,
+a:hover,
+a:focus {
+  text-decoration: none;
+  color:#fff;
+}
+
+h1 {
+  font-size: 30px;
+}
