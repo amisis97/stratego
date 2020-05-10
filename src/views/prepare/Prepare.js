@@ -1,6 +1,6 @@
 import React from 'react';
 import './Prepare.css';
-import { Popup, Icon } from 'semantic-ui-react';
+import { Popup, Icon, Button } from 'semantic-ui-react';
 import cn from 'classnames';
 
 export const boardSize = 10;
@@ -73,7 +73,7 @@ export function Prepare({ state, setState }) {
     return (
         <div className="prepare box scroll">
             <h1>Játék előkészítése</h1>
-            <h3>Helyezd fel a táblára a bábukat, utána nyomj a KÉSZ gombra</h3>
+            <h3><Button onClick={() => setState("MAIN_PAGE")} icon labelPosition='left'>Kilépés a játékból<Icon name='left arrow' /></Button>Helyezd fel a táblára a bábukat, utána nyomj a KÉSZ gombra</h3>
             <button onClick={() => setState("IN_GAME")} className="btn ready">Kész</button>
             <div className="figures-set">
                 {availableFigures.map(figure =>

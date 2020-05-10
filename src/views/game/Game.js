@@ -1,10 +1,32 @@
 import React from 'react';
 import './Game.css';
-import { Icon } from 'semantic-ui-react';
+import { Icon, Popup, Button } from 'semantic-ui-react';
 import { boardSize, gridStyle } from '../prepare/Prepare';
 import cn from 'classnames';
+import { NavLink } from 'react-router-dom';
 
-export function Game() {
+export function Game({state, setState}) {
+
+    const figureToCell = (figure) => {
+        return <BoardCell name={figure.name} key={figure.row + '-' + figure.col} num={figure.num} row={figure.row} col={figure.col}></BoardCell>;
+    }
+
+    const fillBoard = (playerBoard) => {
+        playerBoard.forEach(figure => {
+            if(!boardCells[figure.row]) {
+                boardCells[figure.row] = [];
+            }
+            boardCells[figure.row][figure.col] = figureToCell(figure);
+        });
+    }
+
+    const fillLostDiv = (board) => {
+        const temp = [];
+        board.forEach(figure => {
+            temp.push(figureToCell(figure));
+        });
+        return temp;
+    }
 
     const display = (num) => {
         if(num === -1) { //zaszlo
@@ -16,11 +38,10 @@ export function Game() {
         return (<span>{num}</span>);
     }
 
-    const BoardCell = ({num, row, col}) => {
-        console.log(num)
+    const BoardCell = ({name, num, row, col}) => {
         return (
             <div row={row} className={cn("board-cell", {active: typeof(num) !== "undefined"})}>
-                {display(num)}
+                <Popup content={name} trigger={display(num)} />
             </div>
         )
     }
@@ -37,10 +58,10 @@ export function Game() {
 
     const secondPlayer = {
         'board': [
-            {name: 'Zászló', num: -1, row: 0, col: 0},
-            {name: 'Tábornagy', num: 10, row: 0, col: 1},
-            {name: 'Bomba', num: 0, row: 0, col: 2},
-            {name: 'Bomba', num: 0, row: 1, col: 0},
+            {name: 'Zászló', num: -1, row: 9, col: 9},
+            {name: 'Tábornagy', num: 10, row: 9, col: 8},
+            {name: 'Bomba', num: 0, row: 9, col: 7},
+            {name: 'Bomba', num: 0, row: 8, col: 9},
         ]
     }
 
@@ -55,22 +76,18 @@ export function Game() {
         }
     }
     //Feltoltjuk a jatekosok babujinak koordinatait
-    firstPlayer.board.forEach(figure => {
-        if(!boardCells[figure.row]) {
-            boardCells[figure.row] = [];
-        }
-        boardCells[figure.row][figure.col] = <BoardCell key={figure.row + '-' + figure.col} num={figure.num} row={figure.row} col={figure.col}></BoardCell>;
-    });
-    console.log(boardCells);
+    fillBoard(firstPlayer.board);
+    fillBoard(secondPlayer.board);
     return (
         <div className="scroll box game">
             <h1>Játék</h1>
+            <Button onClick={() => setState("MAIN_PAGE")} icon labelPosition='left'>Kilépés a játékból<Icon name='left arrow' /></Button>
             <h3>2. játékos következik...</h3>
             <div className="boards">
                 <div className="first-player figures">
-                    <h4>1. játékos</h4>
+                    <h4>1. játékos (TE)</h4>
                     <div className="lost-figures">
-
+                        {fillLostDiv(firstPlayer.board)}
                     </div>
                 </div>
                 <div style={gridStyle} className="board">

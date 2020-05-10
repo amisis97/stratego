@@ -9,7 +9,7 @@ import { Prepare } from './views/prepare/Prepare';
 import { Game } from './views/game/Game';
 
 function App() {
-  const [state, setState] = useState('IN_GAME'); // teszt miatt
+  const [state, setState] = useState('MAIN_PAGE'); // teszt miatt
 
   console.log(state);
 
