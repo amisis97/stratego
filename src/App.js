@@ -6,9 +6,10 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Leiras } from './views/static/Leiras';
 import { Wait } from './views/wait/Wait';
 import { Prepare } from './views/prepare/Prepare';
+import { Game } from './views/game/Game';
 
 function App() {
-  const [state, setState] = useState('PREPARE_GAME'); // teszt miatt
+  const [state, setState] = useState('IN_GAME'); // teszt miatt
 
   console.log(state);
 
@@ -23,6 +24,8 @@ function App() {
             <Wait state={state} setState={setState}/>}
             {state === 'PREPARE_GAME' &&
             <Prepare state={state} setState={setState}/>}
+            {state === 'IN_GAME' &&
+            <Game state={state} setState={setState}/>}
           </Route>
           <Route path="/leiras">
             <Leiras />

@@ -1,5 +1,7 @@
 import React from 'react';
 import './Static.css';
+import { Button, Icon } from 'semantic-ui-react';
+import { NavLink } from 'react-router-dom';
 
 export function Leiras() {
     return (
@@ -13,6 +15,7 @@ export function Leiras() {
                     <li>az 1-es a kém, ha ő támadja meg az ellenfél 10-esét, akkor megöli.</li>
                     <li>bomba: aki rálép, az felrobban, a bomba viszont megmarad. Csak az aknász képes leszedni a tábláról.</li>
                 </ul>
+                <NavLink exact to="/"><Button icon labelPosition='left'>Vissza a játékhoz<Icon name='left arrow' /></Button></NavLink>
             </div>
         </div>
     )

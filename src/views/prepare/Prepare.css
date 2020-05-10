@@ -38,6 +38,9 @@
     width: 100%;
     border: 1px solid #fff;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .board .board-cell.unavailable {
     cursor: not-allowed;
