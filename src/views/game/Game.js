@@ -3,7 +3,6 @@ import './Game.css';
 import { Icon, Popup, Button } from 'semantic-ui-react';
 import { boardSize, gridStyle } from '../prepare/Prepare';
 import cn from 'classnames';
-import { NavLink } from 'react-router-dom';
 
 export function Game({state, setState}) {
 

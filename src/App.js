@@ -7,11 +7,13 @@ import { Leiras } from './views/static/Leiras';
 import { Wait } from './views/wait/Wait';
 import { Prepare } from './views/prepare/Prepare';
 import { Game } from './views/game/Game';
+import { getView } from './state/view/selectors';
+import { useSelector, useDispatch } from 'react-redux';
 
 function App() {
-  const [state, setState] = useState('MAIN_PAGE'); // teszt miatt
-
-  console.log(state);
+  const [state, setState] = useState('MAIN_PAGE');
+  console.log(useSelector(getView));
+  //useDispatch;
 
   return (
     <BrowserRouter>
