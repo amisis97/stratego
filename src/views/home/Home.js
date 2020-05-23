@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import './Home.css';
 import { Header, Modal, Input } from 'semantic-ui-react';
+import { useDispatch } from 'react-redux';
+import { setView } from '../../state/view/actions';
 
-const ConnectRoomModal = ({state, setState}) => {
+const ConnectRoomModal = () => {
 
   const [roomState, setRoomState] = useState('');
+  const dispatch = useDispatch();
 
   const enterGame = event => {
     event.preventDefault();
-    console.log(roomState);
-    setState('PREPARE_GAME');
+    dispatch(setView('PREPARE_GAME'));
   };
 
   const handleChange = e => {
@@ -32,11 +34,12 @@ const ConnectRoomModal = ({state, setState}) => {
   );
 }
 
-export function Home({ state, setState }) {
+export function Home() {
+  const dispatch = useDispatch();
   return (
     <div className="home">
-      <button onClick={() => setState("WAITING_FOR_SECOND_PLAYER")} className="btn box">Új játék</button>
-      <ConnectRoomModal state={state} setState={setState}/>
+      <button onClick={() => dispatch(setView("WAITING_FOR_SECOND_PLAYER"))} className="btn box">Új játék</button>
+      <ConnectRoomModal/>
     </div>
   )
 }

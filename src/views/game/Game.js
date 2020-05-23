@@ -3,8 +3,12 @@ import './Game.css';
 import { Icon, Popup, Button } from 'semantic-ui-react';
 import { boardSize, gridStyle } from '../prepare/Prepare';
 import cn from 'classnames';
+import { useDispatch } from 'react-redux';
+import { setView } from '../../state/view/actions';
 
-export function Game({state, setState}) {
+export function Game() {
+
+    const dispatch = useDispatch();
 
     const figureToCell = (figure) => {
         return <BoardCell name={figure.name} key={figure.row + '-' + figure.col} num={figure.num} row={figure.row} col={figure.col}></BoardCell>;
@@ -80,7 +84,7 @@ export function Game({state, setState}) {
     return (
         <div className="scroll box game">
             <h1>Játék</h1>
-            <Button onClick={() => setState("MAIN_PAGE")} icon labelPosition='left'>Kilépés a játékból<Icon name='left arrow' /></Button>
+            <Button onClick={() => dispatch(setView("MAIN_PAGE"))} icon labelPosition='left'>Kilépés a játékból<Icon name='left arrow' /></Button>
             <h3>2. játékos következik...</h3>
             <div className="boards">
                 <div className="first-player figures">

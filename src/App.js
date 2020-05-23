@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './App.css';
 import { Home } from './views/home/Home';
 import { Layout } from './views/layout/Layout';
@@ -8,12 +8,10 @@ import { Wait } from './views/wait/Wait';
 import { Prepare } from './views/prepare/Prepare';
 import { Game } from './views/game/Game';
 import { getView } from './state/view/selectors';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 function App() {
-  const [state, setState] = useState('MAIN_PAGE');
-  console.log(useSelector(getView));
-  //useDispatch;
+  const state = useSelector(getView);
 
   return (
     <BrowserRouter>
@@ -21,13 +19,13 @@ function App() {
         <Switch>
           <Route exact path="/">
             {state === 'MAIN_PAGE' &&
-            <Home state={state} setState={setState}/>}
+            <Home/>}
             {state === 'WAITING_FOR_SECOND_PLAYER' &&
-            <Wait state={state} setState={setState}/>}
+            <Wait/>}
             {state === 'PREPARE_GAME' &&
-            <Prepare state={state} setState={setState}/>}
+            <Prepare/>}
             {state === 'IN_GAME' &&
-            <Game state={state} setState={setState}/>}
+            <Game/>}
           </Route>
           <Route path="/leiras">
             <Leiras />
