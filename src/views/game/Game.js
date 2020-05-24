@@ -61,8 +61,8 @@ export function Game() {
 
     const secondPlayer = {
         'board': [
-            {name: 'Zászló', num: -1, row: 9, col: 9},
-            {name: 'Tábornagy', num: 10, row: 9, col: 8},
+            {name: 'Zászló', num: -1, row: 5, col: 5},
+            {name: 'Tábornagy', num: 6, row: 5, col: 4},
             {name: 'Bomba', num: 0, row: 9, col: 7},
             {name: 'Bomba', num: 0, row: 8, col: 9},
         ]
