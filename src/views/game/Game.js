@@ -3,14 +3,20 @@ import './Game.css';
 import { Icon, Popup, Button } from 'semantic-ui-react';
 import { boardSize, gridStyle } from '../prepare/Prepare';
 import cn from 'classnames';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setView } from '../../state/view/actions';
+import { getFirstPlayerFigures, getFirstPlayerLostFigures, getSecondPLayerFigures, getSecondPlayerLostFigures, getActivePlayer } from '../../state/game/selectors';
 
 export function Game() {
 
     const dispatch = useDispatch();
+    const firstPlayerFigures = useSelector(getFirstPlayerFigures);
+    const secondPlayerFigures = useSelector(getSecondPLayerFigures);
+    const firstPlayerLostFigures = useSelector(getFirstPlayerLostFigures);
+    const secondPlayerLostFigures = useSelector(getSecondPlayerLostFigures);
+    const activePlayer = useSelector(getActivePlayer);
 
-    const figureToCell = (figure) => {
+    const figureToCell = (figure, player) => {
         return <BoardCell name={figure.name} key={figure.row + '-' + figure.col} num={figure.num} row={figure.row} col={figure.col}></BoardCell>;
     }
 
@@ -49,24 +55,6 @@ export function Game() {
         )
     }
 
-    //Ezek az adatok jonnek majd ha beallitjak a jatektablat
-    const firstPlayer = {
-        'board': [
-            {name: 'Zászló', num: -1, row: 0, col: 0},
-            {name: 'Tábornagy', num: 10, row: 0, col: 1},
-            {name: 'Bomba', num: 0, row: 0, col: 2},
-            {name: 'Bomba', num: 0, row: 1, col: 0},
-        ]
-    }
-
-    const secondPlayer = {
-        'board': [
-            {name: 'Zászló', num: -1, row: 5, col: 5},
-            {name: 'Tábornagy', num: 6, row: 5, col: 4},
-            {name: 'Bomba', num: 0, row: 9, col: 7},
-            {name: 'Bomba', num: 0, row: 8, col: 9},
-        ]
-    }
 
     //Feltolti ures mezokkel a jatekot
     const boardCells = [];
@@ -79,8 +67,8 @@ export function Game() {
         }
     }
     //Feltoltjuk a jatekosok babujinak koordinatait
-    fillBoard(firstPlayer.board);
-    fillBoard(secondPlayer.board);
+    fillBoard(firstPlayerFigures);
+    fillBoard(secondPlayerFigures);
     return (
         <div className="scroll box game">
             <h1>Játék</h1>
@@ -90,7 +78,7 @@ export function Game() {
                 <div className="first-player figures">
                     <h4>1. játékos (TE)</h4>
                     <div className="lost-figures">
-                        {fillLostDiv(firstPlayer.board)}
+                        {fillLostDiv(firstPlayerLostFigures)}
                     </div>
                 </div>
                 <div style={gridStyle} className="board">
@@ -99,7 +87,7 @@ export function Game() {
                 <div className="second-player figures">
                     <h4>2. játékos</h4>
                     <div className="lost-figures">
-                        
+                        {fillLostDiv(secondPlayerLostFigures)}
                     </div>
                 </div>
             </div>

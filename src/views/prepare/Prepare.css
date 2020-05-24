@@ -42,9 +42,18 @@
     align-items: center;
     justify-content: center;
 }
+.board-cell.set {
+    background-color: rgba(0,0,0,0.9);
+    font-weight: bold;
+    font-size: 20px;
+}
+.figure-grid.selected {
+    border: 3px solid #f00; 
+}
 .board-cell.unavailable {
     cursor: not-allowed;
     background-color: rgba(255,255,255,0.7);
+    pointer-events: none;
 }
 .prepare {
     position: relative;
@@ -67,6 +76,10 @@
 .prepare button.ready:hover {
     color:#000;
     background-color: #fff;
+}
+.prepare button.ready:disabled {
+    opacity: 0.4;
+    pointer-events: none;
 }
 h3 .ui.button {
     margin-right: 20px;

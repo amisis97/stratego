@@ -4,10 +4,10 @@ import 'semantic-ui-css/semantic.min.css';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { configureStore } from './state/store';
+import { configureAppStore } from './state/store';
 import { Provider } from 'react-redux';
 
-const store = configureStore()
+const store = configureAppStore();
 
 ReactDOM.render(
     <Provider store={store}>
