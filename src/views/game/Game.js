@@ -34,7 +34,8 @@ export function Game() {
     const fillLostDiv = (board) => {
         const temp = [];
         board.forEach(figure => {
-            temp.push(figureToCell(figure));
+            console.log(figure);
+            temp.push(<div className="board-cell">{display(figure.num)}</div>);
         });
         return temp;
     }
@@ -77,6 +78,7 @@ export function Game() {
             boardCells[i][j] = <BoardCell key={i + '-' + j} row={i} col={j}></BoardCell>;
         }
     }
+    console.log(firstPlayerLostFigures);
     //Feltoltjuk a jatekosok babujinak koordinatait
     fillBoard(firstPlayerFigures, 0);
     fillBoard(secondPlayerFigures, 1);
