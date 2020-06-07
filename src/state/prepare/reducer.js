@@ -1,4 +1,4 @@
-import { GRAB_FIGURE, SET_FIGURE, REMOVE_FROM_SET } from "./actions";
+import { GRAB_FIGURE, SET_FIGURE, REMOVE_FROM_SET, CREATE_ROOM } from "./actions";
 import { Figure } from '../../types/Figure';
 
 const initialState = {
@@ -70,8 +70,6 @@ export const prepareReducer = (state = initialState, action) => {
       }
       return state;
     }
-
-
   
     return state;
   }

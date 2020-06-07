@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import { Home } from './views/home/Home';
 import { Layout } from './views/layout/Layout';
@@ -8,10 +8,17 @@ import { Wait } from './views/wait/Wait';
 import { Prepare } from './views/prepare/Prepare';
 import { Game } from './views/game/Game';
 import { getView } from './state/view/selectors';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { wsConnect } from './state/prepare/actions';
+import { socketApi } from './api/socket';
 
 function App() {
   const state = useSelector(getView);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    socketApi.connect();
+  });
 
   return (
     <BrowserRouter>

@@ -1,0 +1,1 @@
+export const getRoomId = state => state.room.roomId;

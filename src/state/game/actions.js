@@ -3,6 +3,7 @@ export const GRAB_FIGURE = 'GRAB_FIGURE';
 export const SWITCH_PLAYER = 'SWITCH_PLAYER';
 export const SELECT_FIGURE = 'SELECT_FIGURE';
 export const MOVE_FIGURE = 'MOVE_FIGURE';
+export const SET_PLAYER_ID = 'SET_PLAYER_ID';
 
 
 export const grabFigure = state => {
@@ -31,4 +32,11 @@ export const moveFigure = state => {
         type: MOVE_FIGURE,
         payload: state
     }); 
+}
+
+export const setPlayerId = state => {
+    return ({
+        type: SET_PLAYER_ID,
+        payload: state
+    });
 }

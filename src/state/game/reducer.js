@@ -1,19 +1,24 @@
 
-import { SWITCH_PLAYER, SET_PLAYER_FIELD, SELECT_FIGURE, MOVE_FIGURE } from './actions';
+import { SWITCH_PLAYER, SET_PLAYER_FIELD, SELECT_FIGURE, MOVE_FIGURE, SET_PLAYER_ID } from './actions';
 
 const initialState = {
   boardSize: 6,
-  activePlayer: 0,
+  activePlayer: 1,
   firstPlayerFigures: [],
   secondPlayerFigures: [],
-  availableFields: []
+  availableFields: [],
+  playerId: null
 }
 
 export const gameReducer = (state = initialState, action) => {
     const { type, payload } = action
+
+    if (type === SET_PLAYER_ID) {
+      return {...state, playerId: payload};
+    }
     
     if (type === SWITCH_PLAYER) {
-      state.activePlayer = state.activePlayer === 0 ? 1 : 0;
+      state.activePlayer = state.activePlayer === 1 ? 2 : 1;
       return state;    
     }
 
@@ -26,8 +31,8 @@ export const gameReducer = (state = initialState, action) => {
 
     if(type === SELECT_FIGURE) {
       let temp = [];
-      const currentPlayer = state.activePlayer === 0 ? 'firstPlayerFigures' : 'secondPlayerFigures';
-      const otherPlayer = state.activePlayer === 1 ? 'firstPlayerFigures' : 'secondPlayerFigures';
+      const currentPlayer = state.activePlayer === 1 ? 'firstPlayerFigures' : 'secondPlayerFigures';
+      const otherPlayer = state.activePlayer === 2 ? 'firstPlayerFigures' : 'secondPlayerFigures';
       state[currentPlayer].forEach(f => {
         if(f.col === payload.col && f.row === payload.row) {
           f.selected = true;
@@ -47,8 +52,8 @@ export const gameReducer = (state = initialState, action) => {
     }
 
     if(type === MOVE_FIGURE) {
-      const currentPlayer = state.activePlayer === 0 ? 'firstPlayerFigures' : 'secondPlayerFigures';
-      const otherPlayer = state.activePlayer === 0 ? 'secondPlayerFigures' : 'firstPlayerFigures';
+      const currentPlayer = state.activePlayer === 1 ? 'firstPlayerFigures' : 'secondPlayerFigures';
+      const otherPlayer = state.activePlayer === 1 ? 'secondPlayerFigures' : 'firstPlayerFigures';
       state[currentPlayer].forEach(f => {
         if(f.selected && state.availableFields.find(af => af.col === payload.col && af.row === payload.row)) {
           const otherPlayerField = state[otherPlayer].find(of => of.col === payload.col && of.row === payload.row);
@@ -58,7 +63,7 @@ export const gameReducer = (state = initialState, action) => {
             f.selected = false;
           } else {
             if(otherPlayerField.num === -1) {
-              alert('Vége a játéknak! Gyozott: ' + (state.activePlayer + 1) + 'jatekos');
+              alert('Vége a játéknak! Gyozott: ' + (state.activePlayer) + 'jatekos');
             }
             else if(otherPlayerField.num > f.num) {
               f.lost = true;
@@ -74,7 +79,7 @@ export const gameReducer = (state = initialState, action) => {
           }
         }
       });
-      return {...state, firstPlayerFigures: state.firstPlayerFigures, availableFields: [], activePlayer: state.activePlayer === 0 ? 1 : 0};
+      return {...state, firstPlayerFigures: state.firstPlayerFigures, availableFields: [], activePlayer: state.activePlayer === 1 ? 2 : 1};
     }
 
     return state;
