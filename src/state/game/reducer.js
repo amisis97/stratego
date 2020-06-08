@@ -23,10 +23,8 @@ export const gameReducer = (state = initialState, action) => {
     }
 
     if(type === SET_PLAYER_FIELD) {
-      const secondPlayer = payload.map(f => {
-        return {...f, col: 5 - f.col, row: 5 - f.row}
-      });
-      return {...state, firstPlayerFigures: payload, secondPlayerFigures: secondPlayer};
+      if(payload.playerId === 1) return {...state, firstPlayerFigures: payload.figures};
+      else return {...state, secondPlayerFigures: payload.figures};
     }
 
     if(type === SELECT_FIGURE) {

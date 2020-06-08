@@ -1,7 +1,7 @@
 import io from 'socket.io-client'
 import { setRoom } from '../state/room/actions';
 import { setView } from '../state/view/actions';
-import { setPlayerId } from '../state/game/actions';
+import { setPlayerId, setPlayerField } from '../state/game/actions';
 
 class SocketApi {
   constructor() {
@@ -22,6 +22,7 @@ class SocketApi {
           dispatch(setPlayerId(response.player));
           dispatch(setView('PREPARE_GAME'));
         });
+        this.stateChanged(dispatch);
       }
     });
   }
@@ -31,22 +32,34 @@ class SocketApi {
       console.log(response);
       dispatch(setPlayerId(response.player));
       dispatch(setView('PREPARE_GAME'));
-    })
+    });
+    this.stateChanged(dispatch);
     this.socket.emit('join-room', roomId, response => {
       if (response.status === 'ok') {
         dispatch(setRoom(roomId));
       }
     });
   }
-  /*onReceiveMessage(callback) {
-    const listener = message => {
-      if (socket.id !== message.emitter) {
-        callback(message)
+
+  savePrepare(roomId, state, dispatch) {
+    this.socket.emit('sync-state', roomId, state, false, function(response) {
+      console.log(response);
+    });
+  }
+
+  stateChanged(dispatch) {
+    this.socket.on('state-changed', response => {
+      console.log(response);
+      if(response.state.playerId === 1) {
+        dispatch(setPlayerField({playerId: response.state.playerId, figures: response.state.firstPlayerFigures}));
+      } else {
+        dispatch(setPlayerField({playerId: response.state.playerId, figures: response.state.secondPlayerFigures}));
       }
-    }
-    socket.on('messages created', listener)
-    return () => socket.off('messages created', listener)
-  }*/
+      if(response.state.firstPlayerFigures.length > 0 && response.state.secondPlayerFigures.length > 0) {
+        dispatch(setView('IN_GAME'));
+      }
+    });
+  }
 }
 
 export const socketApi = new SocketApi()

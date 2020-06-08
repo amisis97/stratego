@@ -4,3 +4,5 @@ export const getSecondPLayerFigures = state => state.game.secondPlayerFigures.fi
 export const getFirstPlayerLostFigures = state => state.game.firstPlayerFigures.filter(f => f.lost);
 export const getSecondPlayerLostFigures = state => state.game.secondPlayerFigures.filter(f => f.lost);
 export const getAvailableFields = state => state.game.availableFields;
+export const getGame = state => state.game;
+export const getPlayerId = state => state.game.playerId;

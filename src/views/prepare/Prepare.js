@@ -8,6 +8,9 @@ import { getAvailableFigures, getSetFigures, getGrabFigure } from '../../state/p
 import { grabFigure, setFigure, deleteFigure } from '../../state/prepare/actions';
 import { setPlayerField } from '../../state/game/actions'; 
 import { Figure } from '../../types/Figure';
+import { socketApi } from '../../api/socket';
+import { getRoomId } from '../../state/room/selectors';
+import { getGame, getPlayerId, getFirstPlayerFigures, getSecondPLayerFigures } from '../../state/game/selectors';
 
 
 export const boardSize = 6;
@@ -56,7 +59,12 @@ export function Prepare() {
     const dispatch = useDispatch();
     const boardCells = useSelector(getSetFigures);
     const availableFigures = useSelector(getAvailableFigures);
+    const firstPlayerFigures = useSelector(getFirstPlayerFigures);
+    const secondPlayerFigures = useSelector(getSecondPLayerFigures);
+    const roomId = useSelector(getRoomId);
     const tempBoardCells = [];
+    const game = useSelector(getGame);
+    const playerId = useSelector(getPlayerId);
 
     
 
@@ -71,8 +79,16 @@ export function Prepare() {
     }
 
     const handleContinue = (e) => {
-        dispatch(setPlayerField(boardCells));
-        dispatch(setView('IN_GAME'));
+        console.log(playerId);
+        dispatch(setPlayerField({
+            playerId: playerId, 
+            figures: boardCells
+        }));
+        if(playerId === 1) {
+            socketApi.savePrepare(roomId, {...game, firstPlayerFigures: boardCells}, dispatch);
+        } else {
+            socketApi.savePrepare(roomId, {...game, secondPlayerFigures: boardCells}, dispatch);
+        }
     }
 
     return (

@@ -51,9 +51,9 @@ export function Game() {
     }
 
     const selectFigureEvent = (row, col) => {
-        if(activePlayer === 0 && firstPlayerFigures.find(f => f.row === row && f.col === col)) {
+        if(activePlayer === 1 && firstPlayerFigures.find(f => f.row === row && f.col === col)) {
             dispatch(selectFigure({row: row, col: col}));
-        } else if(activePlayer === 1 && secondPlayerFigures.find(f => f.row === row && f.col === col)) {
+        } else if(activePlayer === 2 && secondPlayerFigures.find(f => f.row === row && f.col === col)) {
             dispatch(selectFigure({row: row, col: col}));
         } else if(availableFields.find(f => f.row === row && f.col === col)) {
             dispatch(moveFigure({row: row, col: col}));
@@ -86,7 +86,7 @@ export function Game() {
         <div className="scroll box game">
             <h1>Játék</h1>
             <Button onClick={() => dispatch(setView("MAIN_PAGE"))} icon labelPosition='left'>Kilépés a játékból<Icon name='left arrow' /></Button>
-            <h3>{activePlayer + 1}. játékos következik...</h3>
+            <h3>{activePlayer}. játékos következik...</h3>
             <div className="boards">
                 <div className="first-player figures">
                     <h4>1. játékos (TE)</h4>
