@@ -5,8 +5,10 @@ import { boardSize, gridStyle } from '../prepare/Prepare';
 import cn from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 import { setView } from '../../state/view/actions';
-import { getFirstPlayerFigures, getFirstPlayerLostFigures, getSecondPLayerFigures, getSecondPlayerLostFigures, getActivePlayer, getAvailableFields } from '../../state/game/selectors';
-import { selectFigure, moveFigure } from '../../state/game/actions';
+import { getFirstPlayerFigures, getFirstPlayerLostFigures, getSecondPLayerFigures, getSecondPlayerLostFigures, getActivePlayer, getAvailableFields, getGame, getPlayerId } from '../../state/game/selectors';
+import { selectFigure, moveFigure, setActivePlayer } from '../../state/game/actions';
+import { socketApi } from '../../api/socket';
+import { getRoomId } from '../../state/room/selectors';
 
 export function Game() {
 
@@ -17,6 +19,10 @@ export function Game() {
     const secondPlayerLostFigures = useSelector(getSecondPlayerLostFigures);
     const availableFields = useSelector(getAvailableFields);
     const activePlayer = useSelector(getActivePlayer);
+    const roomId = useSelector(getRoomId);
+    const game = useSelector(getGame);
+    const playerId = useSelector(getPlayerId);
+    console.log(activePlayer);
 
     const figureToCell = (figure, playerNum) => {
         return <BoardCell selected={figure.selected} playerNum={playerNum} name={figure.name} key={figure.row + '-' + figure.col} num={figure.num} row={figure.row} col={figure.col}></BoardCell>;
@@ -51,19 +57,21 @@ export function Game() {
     }
 
     const selectFigureEvent = (row, col) => {
-        if(activePlayer === 1 && firstPlayerFigures.find(f => f.row === row && f.col === col)) {
+        if(playerId === 1 && firstPlayerFigures.find(f => f.row === row && f.col === col)) {
             dispatch(selectFigure({row: row, col: col}));
-        } else if(activePlayer === 2 && secondPlayerFigures.find(f => f.row === row && f.col === col)) {
+        } else if(playerId === 2 && secondPlayerFigures.find(f => f.row === row && f.col === col)) {
             dispatch(selectFigure({row: row, col: col}));
         } else if(availableFields.find(f => f.row === row && f.col === col)) {
             dispatch(moveFigure({row: row, col: col}));
+            socketApi.saveState(roomId, {...game, activePlayer: playerId === 1 ? 2 : 1}, dispatch);
         }
+       
     }
 
     const BoardCell = ({name, num, row, col, selected, playerNum}) => {
         return (
-            <div onClick={() => selectFigureEvent(row, col)} playernum={playerNum} row={row} col={col} className={cn("board-cell", {active: typeof(num) !== "undefined"}, {first: playerNum === 0}, {second: playerNum === 1}, {selected : selected}, {available: availableFields.find(af => af.row === row && af.col === col)})}>
-                <Popup content={name} trigger={activePlayer === playerNum ? display(num) : null} />
+            <div onClick={() => selectFigureEvent(row, col)} playernum={playerNum} row={row} col={col} className={cn("board-cell", {active: typeof(num) !== "undefined"}, {first: playerNum === 1}, {second: playerNum === 2}, {selected : selected}, {available: availableFields.find(af => af.row === row && af.col === col)})}>
+                <Popup content={name} trigger={playerId === playerNum ? display(num) : null} />
             </div>
         )
     }
@@ -80,16 +88,16 @@ export function Game() {
     }
     console.log(firstPlayerLostFigures);
     //Feltoltjuk a jatekosok babujinak koordinatait
-    fillBoard(firstPlayerFigures, 0);
-    fillBoard(secondPlayerFigures, 1);
+    fillBoard(firstPlayerFigures, 1);
+    fillBoard(secondPlayerFigures, 2);
     return (
         <div className="scroll box game">
             <h1>Játék</h1>
-            <Button onClick={() => dispatch(setView("MAIN_PAGE"))} icon labelPosition='left'>Kilépés a játékból<Icon name='left arrow' /></Button>
-            <h3>{activePlayer}. játékos következik...</h3>
+            <Button onClick={() => socketApi.leaveRoom(roomId, dispatch)} icon labelPosition='left'>Kilépés a játékból<Icon name='left arrow' /></Button>
+            <h3>{activePlayer === playerId ? 'Te következel!' : 'Másik játékos következik!'}</h3>
             <div className="boards">
                 <div className="first-player figures">
-                    <h4>1. játékos (TE)</h4>
+                    <h4>1. játékos {playerId === 1 ? '(TE)' : ''}</h4>
                     <div className="lost-figures">
                         {fillLostDiv(firstPlayerLostFigures)}
                     </div>
@@ -98,7 +106,7 @@ export function Game() {
                     {boardCells}
                 </div>
                 <div className="second-player figures">
-                    <h4>2. játékos</h4>
+                    <h4>2. játékos {playerId === 2 ? '(TE)' : ''}</h4>
                     <div className="lost-figures">
                         {fillLostDiv(secondPlayerLostFigures)}
                     </div>

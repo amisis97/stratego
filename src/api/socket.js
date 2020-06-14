@@ -1,7 +1,8 @@
 import io from 'socket.io-client'
 import { setRoom } from '../state/room/actions';
 import { setView } from '../state/view/actions';
-import { setPlayerId, setPlayerField } from '../state/game/actions';
+import { setPlayerId, setPlayerField, setActivePlayer, resetGame } from '../state/game/actions';
+import { resetPrepare } from '../state/prepare/actions';
 
 class SocketApi {
   constructor() {
@@ -25,6 +26,12 @@ class SocketApi {
         this.stateChanged(dispatch);
       }
     });
+    this.socket.on('player-left', response => {
+      console.log(response);
+      dispatch(setView('MAIN_PAGE'));
+      dispatch(resetGame());
+      dispatch(resetPrepare());
+    });
   }
 
   joinRoom(roomId, dispatch) {
@@ -32,6 +39,10 @@ class SocketApi {
       console.log(response);
       dispatch(setPlayerId(response.player));
       dispatch(setView('PREPARE_GAME'));
+    });
+    this.socket.on('player-left', response => {
+      console.log(response);
+      dispatch(setView('MAIN_PAGE'));
     });
     this.stateChanged(dispatch);
     this.socket.emit('join-room', roomId, response => {
@@ -47,6 +58,12 @@ class SocketApi {
     });
   }
 
+  saveState(roomId, state, dispatch) {
+    this.socket.emit('sync-state', roomId, state, false, function(response) {
+      console.log(response);
+    });
+  }
+
   stateChanged(dispatch) {
     this.socket.on('state-changed', response => {
       console.log(response);
@@ -55,9 +72,18 @@ class SocketApi {
       } else {
         dispatch(setPlayerField({playerId: response.state.playerId, figures: response.state.secondPlayerFigures}));
       }
+      dispatch(setActivePlayer(response.state.activePlayer));
       if(response.state.firstPlayerFigures.length > 0 && response.state.secondPlayerFigures.length > 0) {
         dispatch(setView('IN_GAME'));
       }
+    });
+  }
+
+  leaveRoom(roomId, dispatch) {
+    this.socket.emit('leave-room', roomId, function(response) {
+      dispatch(setView('MAIN_PAGE'));
+      dispatch(resetGame());
+      dispatch(resetPrepare());
     });
   }
 }

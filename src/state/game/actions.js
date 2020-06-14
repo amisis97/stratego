@@ -4,6 +4,7 @@ export const SWITCH_PLAYER = 'SWITCH_PLAYER';
 export const SELECT_FIGURE = 'SELECT_FIGURE';
 export const MOVE_FIGURE = 'MOVE_FIGURE';
 export const SET_PLAYER_ID = 'SET_PLAYER_ID';
+export const RESET_GAME = 'RESET_GAME';
 
 
 export const grabFigure = state => {
@@ -38,5 +39,19 @@ export const setPlayerId = state => {
     return ({
         type: SET_PLAYER_ID,
         payload: state
+    });
+}
+
+
+export const setActivePlayer = state => {
+    return ({
+        type: SWITCH_PLAYER,
+        payload: state
+    });
+}
+
+export const resetGame = () => {
+    return ({
+        type: RESET_GAME
     });
 }

@@ -1,5 +1,5 @@
 
-import { SWITCH_PLAYER, SET_PLAYER_FIELD, SELECT_FIGURE, MOVE_FIGURE, SET_PLAYER_ID } from './actions';
+import { SWITCH_PLAYER, SET_PLAYER_FIELD, SELECT_FIGURE, MOVE_FIGURE, SET_PLAYER_ID, RESET_GAME } from './actions';
 
 const initialState = {
   boardSize: 6,
@@ -18,7 +18,7 @@ export const gameReducer = (state = initialState, action) => {
     }
     
     if (type === SWITCH_PLAYER) {
-      state.activePlayer = state.activePlayer === 1 ? 2 : 1;
+      state.activePlayer = payload;
       return state;    
     }
 
@@ -77,7 +77,11 @@ export const gameReducer = (state = initialState, action) => {
           }
         }
       });
-      return {...state, firstPlayerFigures: state.firstPlayerFigures, availableFields: [], activePlayer: state.activePlayer === 1 ? 2 : 1};
+      return {...state, firstPlayerFigures: state.firstPlayerFigures, secondPlayerFigures: state.secondPlayerFigures, availableFields: []};
+    }
+
+    if(type === RESET_GAME) {
+      return initialState;
     }
 
     return state;

@@ -1,4 +1,4 @@
-import { GRAB_FIGURE, SET_FIGURE, REMOVE_FROM_SET, CREATE_ROOM } from "./actions";
+import { GRAB_FIGURE, SET_FIGURE, REMOVE_FROM_SET, CREATE_ROOM, RESET_PREPARE } from "./actions";
 import { Figure } from '../../types/Figure';
 
 const initialState = {
@@ -69,6 +69,10 @@ export const prepareReducer = (state = initialState, action) => {
         state.availableFigures.push(new Figure(elem.name, 1, elem.num));
       }
       return state;
+    }
+
+    if(type === RESET_PREPARE) {
+      return initialState;
     }
   
     return state;

@@ -32,7 +32,7 @@ const FigureGrid = ({figure}) => {
     )
 }
 
-const BoardCell = ({figure, row, col}) => {
+const BoardCell = ({playerId, figure, row, col}) => {
 
     const dispatch = useDispatch();
 
@@ -45,9 +45,10 @@ const BoardCell = ({figure, row, col}) => {
     } 
 
     const fig = figure ? new Figure(figure.name, 1, figure.num) : null;
+    const unavailable = playerId === 1 ? row < 4 : row > 1;
 
     return (
-        <div onClick={(e) => clickHandle(e)} row={row} className={cn("board-cell", {unavailable: row < 4}, {set: fig})}>
+        <div onClick={(e) => clickHandle(e)} row={row} className={cn("board-cell", {unavailable: unavailable}, {set: fig})}>
             {fig ? fig.display() : null}
         </div>
     )
@@ -74,7 +75,7 @@ export function Prepare() {
                 tempBoardCells[i] = [];
             }
             const setted = boardCells.find(b => b.row === i &&  b.col === j);
-            tempBoardCells[i][j] = <BoardCell figure={setted} key={i + '-' + j} row={i} col={j}></BoardCell>;
+            tempBoardCells[i][j] = <BoardCell playerId={playerId} figure={setted} key={i + '-' + j} row={i} col={j}></BoardCell>;
         }
     }
 
@@ -94,7 +95,7 @@ export function Prepare() {
     return (
         <div className="prepare box scroll">
             <h1>Játék előkészítése</h1>
-            <h3><Button onClick={() => dispatch(setView("MAIN_PAGE"))} icon labelPosition='left'>Kilépés a játékból<Icon name='left arrow' /></Button>Helyezd fel a táblára a bábukat, utána nyomj a KÉSZ gombra</h3>
+            <h3><Button onClick={() => socketApi.leaveRoom(roomId, dispatch)} icon labelPosition='left'>Kilépés a játékból<Icon name='left arrow' /></Button>Helyezd fel a táblára a bábukat, utána nyomj a KÉSZ gombra</h3>
             <button disabled={availableFigures.length > 0} onClick={(e) => handleContinue(e)} className={cn("btn ready")}>Kész</button>
             <div className="figures-set">
                 {!availableFigures ? null : availableFigures.map(figure =>
